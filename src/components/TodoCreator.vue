@@ -1,21 +1,27 @@
 <script setup>
-import { ref, reactive} from 'vue';
+// import { ref, reactive} from 'vue';
+import { ref} from 'vue';
 
 // to reactive the variable by using 1 of 2 methods: ref or reactive method
 const todo = ref("");
-// console.log(todo);
+// console.log(todo.value);
 
-const todoState = reactive({
-todo: "Testing reactive"
-});
+// const todoState = reactive({
+// todo: "Testing reactive"
+// });
+// console.log(todoState.todo);
+
+
 </script>
 
 <template>
     <div class="input-wrap">
-    <input type="text" v-model="todoState.todo">
+    <input type="text" v-model="todo">
+    <!-- <input type="text" v-model="todoState.todo"> -->
     <button>Create</button>
     </div>
-    <p>{{ todoState.todo }}</p>
+    <!-- <p>{{ todo }}</p> -->
+    <!-- <p>{{ todoState.todo }}</p> -->
 </template>
 
 
