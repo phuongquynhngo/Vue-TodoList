@@ -1,6 +1,8 @@
 <script setup>
 // import { ref, reactive} from 'vue';
-import { ref} from 'vue';
+import { ref, defineEmits} from 'vue';
+
+const emit = defineEmits(["create-todo"])
 
 // to reactive the variable by using 1 of 2 methods: ref or reactive method
 const todo = ref("");
@@ -12,13 +14,17 @@ const todo = ref("");
 // console.log(todoState.todo);
 
 
+
+const createTodo =()=>{
+ emit("create-todo", todo.value)
+};
 </script>
 
 <template>
     <div class="input-wrap">
     <input type="text" v-model="todo">
     <!-- <input type="text" v-model="todoState.todo"> -->
-    <button>Create</button>
+    <button @click="createTodo">Create</button>
     </div>
     <!-- <p>{{ todo }}</p> -->
     <!-- <p>{{ todoState.todo }}</p> -->
