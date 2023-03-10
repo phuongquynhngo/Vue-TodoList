@@ -1,10 +1,10 @@
 <script setup>
 import { uid } from "uid";
 import { ref } from "vue";
-import TodoCreator from '../components/TodoCreator.vue';
+import TodoCreator from "../components/TodoCreator.vue";
 import TodoItem from "../components/TodoItem.vue";
 
-const todoList =ref([])
+const todoList = ref([]);
 
 const createTodo = (todo) => {
   todoList.value.push({
@@ -17,12 +17,12 @@ const createTodo = (todo) => {
 </script>
 
 <template>
-    <main>
-        <h1>Create Todo</h1>
-        <TodoCreator @create-todo="createTodo"/>
-<TodoItem v-for="todo in todoList" :todo="todo"/>
-      <!-- <p>{{ todoList }}</p> -->
-    </main>
+  <main>
+    <h1>Create Todo</h1>
+    <TodoCreator @create-todo="createTodo" />
+    <TodoItem v-for="todo in todoList" :todo="todo" />
+    <!-- <p>{{ todoList }}</p> -->
+  </main>
 </template>
 <style scoped lang="scss">
 main {
