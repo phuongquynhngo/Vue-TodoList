@@ -1,7 +1,12 @@
 <script setup>
 // import { ref, reactive} from 'vue';
-import { defineEmits, reactive} from 'vue';
+// import { defineEmits, reactive} from 'vue';
+import { reactive} from 'vue';
+// `defineEmits` is a compiler macro and no longer needs to be imported.
 //Emit Custom Events:  send data and trigger actions between components. send data from child component to parents component 
+
+import TodoButton from "./TodoButton.vue"
+
 
 const emit = defineEmits(["create-todo"])
 
@@ -40,7 +45,7 @@ const createTodo = () => {
     <div class="input-wrap" :class="{ 'input-err': todoState.invalid }">
     <input type="text" v-model="todoState.todo">
     <!-- <input type="text" v-model="todoState.todo"> -->
-    <button @click="createTodo">Create</button>
+    <TodoButton @click="createTodo">Create</TodoButton>
     
     </div>
     <p class="err-msg" v-show="todoState.invalid">{{ todoState.errMsg }}</p>
@@ -75,10 +80,7 @@ const createTodo = () => {
       outline: none;
     }
   }
-  button {
-    padding: 8px 16px;
-    border: none;
-  }
+
 }
 .err-msg {
   margin-top: 6px;
