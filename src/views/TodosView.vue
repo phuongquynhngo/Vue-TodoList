@@ -2,7 +2,7 @@
 import { uid } from "uid";
 import { ref } from "vue";
 import TodoCreator from '../components/TodoCreator.vue';
-
+import TodoItem from "../components/TodoItem.vue";
 
 const todoList =ref([])
 
@@ -20,7 +20,7 @@ const createTodo = (todo) => {
     <main>
         <h1>Create Todo</h1>
         <TodoCreator @create-todo="createTodo"/>
-
+<TodoItem v-for="todo in todoList" :todo="todo"/>
       <!-- <p>{{ todoList }}</p> -->
     </main>
 </template>
