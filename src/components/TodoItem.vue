@@ -13,8 +13,16 @@ const props = defineProps({
   todo: {
     type: Object,
     required: true,
+    default: () => {},
+  },
+  index: {
+    type: Number,
+    required: true,
+    default: 0,
   },
 });
+
+defineEmits(["toggle-complete"]);
 </script>
 
 <template>
@@ -26,14 +34,23 @@ const props = defineProps({
       "checked", the box is checked by default.  -->
     <!-- checked attribute: here sync to value " isCompleted" of the prop "todo" 
       which come from todoList (check TodosView)-->
-    <input type="checkbox" :checked="todo.isCompleted" />
+      <!-- Emit the index of todo to the parent View: TodosView.vue-->
+    <input
+      type="checkbox"
+      :checked="todo.isCompleted"
+      @input="$emit('toggle-complete', index)"
+    />
 
     <div class="todo">
       <!-- <input type="text">: type into this input to edit or update todo 
     sync tha value of this input with value of the value of its specific todo -->
       <input v-if="todo.isEditing" type="text" :value="todo.todo" />
-      <!-- span tag: output the value of todo -->
-      <span v-else>{{ todo.todo }}</span>
+
+      <!-- span tag: output the value of todo 
+      :class="{ 'completed-todo': todo.isCompleted } : v-bind class completed-todo when todo.isCompleted  has the value true-->
+      <span v-else :class="{ 'completed-todo': todo.isCompleted }">{{
+        todo.todo
+      }}</span>
     </div>
 
     <!-- https://icon-sets.iconify.design/ -->
@@ -84,6 +101,9 @@ li {
   }
   .todo {
     flex: 1;
+    .completed-todo {
+      text-decoration: line-through;
+    }
     input[type="text"] {
       width: 100%;
       padding: 2px 6px;
