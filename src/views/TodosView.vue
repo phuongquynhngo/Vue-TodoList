@@ -24,7 +24,6 @@ const toggleTodoComplete = (todoPos) => {
   // console.log(todoList.value[todoPos].isCompleted, todoPos)
 };
 
-
 // change the value of  "isEditing" property to the opposite value
 const toggleEditTodo = (todoPos) => {
   todoList.value[todoPos].isEditing = !todoList.value[todoPos].isEditing;
@@ -32,10 +31,15 @@ const toggleEditTodo = (todoPos) => {
 };
 
 //update the value of todo to the update value
-const updateTodo =(todoVal, todoPos)=>{
-  todoList.value[todoPos].todo=todoVal
-}
+const updateTodo = (todoVal, todoPos) => {
+  todoList.value[todoPos].todo = todoVal;
+};
 
+// remove the current todo by filter methode
+// filter all the todos with the id not equal to the id of the todo we want to remove
+const deleteTodo = (todoId) => {
+  todoList.value = todoList.value.filter((todo) => todo.id !== todoId);
+};
 </script>
 
 <template>
@@ -51,6 +55,7 @@ const updateTodo =(todoVal, todoPos)=>{
         @toggle-complete="toggleTodoComplete"
         @edit-todo="toggleEditTodo"
         @update-todo="updateTodo"
+        @delete-todo="deleteTodo"
       />
     </ul>
     <p v-else class="todos-msg">

@@ -27,6 +27,7 @@ const todoState = reactive({
   invalid: false,
   errMsg: "",
 });
+  //emit the value of todo to the parent View: TodosView.vue
 const createTodo = () => {
     todoState.invalid = false;
   if (todoState.todo !== "") {
@@ -43,6 +44,7 @@ const createTodo = () => {
 
 <template>
     <div class="input-wrap" :class="{ 'input-err': todoState.invalid }">
+     <!-- v-model: save the input value to the property todo of the state "todoState" -->
     <input type="text" v-model="todoState.todo">
     <!-- <input type="text" v-model="todoState.todo"> -->
     <TodoButton @click="createTodo">Create</TodoButton>
