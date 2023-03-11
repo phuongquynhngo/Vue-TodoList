@@ -23,6 +23,19 @@ const toggleTodoComplete = (todoPos) => {
   todoList.value[todoPos].isCompleted = !todoList.value[todoPos].isCompleted;
   // console.log(todoList.value[todoPos].isCompleted, todoPos)
 };
+
+
+// change the value of  "isEditing" property to the opposite value
+const toggleEditTodo = (todoPos) => {
+  todoList.value[todoPos].isEditing = !todoList.value[todoPos].isEditing;
+  // console.log(todoList.value[todoPos].isEditing, todoPos)
+};
+
+//update the value of todo to the update value
+const updateTodo =(todoVal, todoPos)=>{
+  todoList.value[todoPos].todo=todoVal
+}
+
 </script>
 
 <template>
@@ -36,6 +49,8 @@ const toggleTodoComplete = (todoPos) => {
         :todo="todo"
         :index="index"
         @toggle-complete="toggleTodoComplete"
+        @edit-todo="toggleEditTodo"
+        @update-todo="updateTodo"
       />
     </ul>
     <p v-else class="todos-msg">

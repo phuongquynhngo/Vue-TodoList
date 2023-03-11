@@ -22,7 +22,7 @@ const props = defineProps({
   },
 });
 
-defineEmits(["toggle-complete"]);
+defineEmits(["toggle-complete", "edit-todo", "update-todo"]);
 </script>
 
 <template>
@@ -34,7 +34,7 @@ defineEmits(["toggle-complete"]);
       "checked", the box is checked by default.  -->
     <!-- checked attribute: here sync to value " isCompleted" of the prop "todo" 
       which come from todoList (check TodosView)-->
-      <!-- Emit the index of todo to the parent View: TodosView.vue-->
+    <!-- inline Emit: Emit the index of todo to the parent View: TodosView.vue-->
     <input
       type="checkbox"
       :checked="todo.isCompleted"
@@ -43,8 +43,18 @@ defineEmits(["toggle-complete"]);
 
     <div class="todo">
       <!-- <input type="text">: type into this input to edit or update todo 
-    sync tha value of this input with value of the value of its specific todo -->
-      <input v-if="todo.isEditing" type="text" :value="todo.todo" />
+    sync the value of this input with value of the value of its specific todo
+    inline Emit: listen for the chang of input by using input-event-listener 
+                 and emit Event with some values (value of this actual input $event.target.value and index of the current todo )
+                 to to the parent View: TodosView.vue 
+                 in TodosView.vue: run a function to update the value of todo when the event is emitted.
+     -->
+      <input
+        v-if="todo.isEditing"
+        type="text"
+        :value="todo.todo"
+        @input="$emit('update-todo', $event.target.value, index )"
+      />
 
       <!-- span tag: output the value of todo 
       :class="{ 'completed-todo': todo.isCompleted } : v-bind class completed-todo when todo.isCompleted  has the value true-->
@@ -53,7 +63,10 @@ defineEmits(["toggle-complete"]);
       }}</span>
     </div>
 
-    <!-- https://icon-sets.iconify.design/ -->
+    <!-- https://icon-sets.iconify.design/ 
+     @click="$emit('edit-todo', index)": listen to event "click": emit "edit-todo" to the parent View: TodosView.vue
+    -->
+
     <div class="todo-action">
       <Icon
         v-if="todo.isEditing"
@@ -61,6 +74,7 @@ defineEmits(["toggle-complete"]);
         class="icon"
         color="#41b080"
         width="22"
+        @click="$emit('edit-todo', index)"
       />
       <Icon
         v-else
@@ -68,6 +82,7 @@ defineEmits(["toggle-complete"]);
         class="icon"
         color="#41b080"
         width="22"
+        @click="$emit('edit-todo', index)"
       />
       <Icon icon="ph:trash" class="icon" color="#f95e5e" width="22" />
     </div>
