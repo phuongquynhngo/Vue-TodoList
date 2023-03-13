@@ -7,18 +7,6 @@ import TodoItem from "../components/TodoItem.vue";
 
 const todoList = ref([]);
 
-
-//listen for change on reactive data "todoList" , invoke a callback function in which we
-// run the function setTodoListLocalStorage each time todoList array is updated 
-//  { deep: true }: option for watch property: track changes deep within this todoList array
-watch(
-  todoList,
-  () => {
-    setTodoListLocalStorage();
-  },
-  { deep: true }
-);
-
 //function to retrieve the items from local storage when we refresh the application
 const fetchTodoList = () => {
   //get a referance to the item  inside the local storage od todoList
