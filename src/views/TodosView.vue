@@ -1,11 +1,23 @@
 <script setup>
 import { uid } from "uid";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { Icon } from "@iconify/vue";
 import TodoCreator from "../components/TodoCreator.vue";
 import TodoItem from "../components/TodoItem.vue";
 
 const todoList = ref([]);
+
+
+//listen for change on reactive data "todoList" , invoke a callback function in which we
+// run the function setTodoListLocalStorage each time todoList array is updated 
+//  { deep: true }: option for watch property: track changes deep within this todoList array
+watch(
+  todoList,
+  () => {
+    setTodoListLocalStorage();
+  },
+  { deep: true }
+);
 
 //function to retrieve the items from local storage when we refresh the application
 const fetchTodoList = () => {
@@ -14,12 +26,14 @@ const fetchTodoList = () => {
 
   // if check: check if value saveTodoList truthy/ not equal null ( we have item todoList inside the local storage)
   //             then pass the value from local storage to todoList array
-  if (savedTodoList){
+  if (savedTodoList) {
     todoList.value = savedTodoList;
   }
 };
+
+// Fetch Todo's on page load
 //execute the fetchTodoList function each time we refresh the application
- fetchTodoList();
+fetchTodoList();
 
 //reuseable function to save todoList array to localstorage
 // and execute this function each time todo is created or this is an update to a todo
@@ -29,8 +43,6 @@ const setTodoListLocalStorage = () => {
   localStorage.setItem("todoList", JSON.stringify(todoList.value));
 };
 
-
-
 const createTodo = (todo) => {
   todoList.value.push({
     id: uid(),
@@ -38,7 +50,7 @@ const createTodo = (todo) => {
     isCompleted: false,
     isEditing: null,
   });
-  setTodoListLocalStorage();
+  //setTodoListLocalStorage();
 };
 
 //  toggle Todo Complete: update the "isCompleted" property to the opposite value whenever
@@ -47,27 +59,27 @@ const createTodo = (todo) => {
 const toggleTodoComplete = (todoPos) => {
   todoList.value[todoPos].isCompleted = !todoList.value[todoPos].isCompleted;
   // console.log(todoList.value[todoPos].isCompleted, todoPos)
-  setTodoListLocalStorage();
+  //setTodoListLocalStorage();
 };
 
 // change the value of  "isEditing" property to the opposite value
 const toggleEditTodo = (todoPos) => {
   todoList.value[todoPos].isEditing = !todoList.value[todoPos].isEditing;
   // console.log(todoList.value[todoPos].isEditing, todoPos)
-  setTodoListLocalStorage();
+  //setTodoListLocalStorage();
 };
 
 //update the value of todo to the update value
 const updateTodo = (todoVal, todoPos) => {
   todoList.value[todoPos].todo = todoVal;
-  setTodoListLocalStorage();
+  //setTodoListLocalStorage();
 };
 
 // remove the current todo by filter methode
 // filter all the todos with the id not equal to the id of the todo we want to remove
 const deleteTodo = (todoId) => {
   todoList.value = todoList.value.filter((todo) => todo.id !== todoId);
-  setTodoListLocalStorage();
+  //setTodoListLocalStorage();
 };
 </script>
 
