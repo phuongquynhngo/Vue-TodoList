@@ -1,14 +1,16 @@
 <script setup>
 import { uid } from "uid";
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
+// computed is used to create a new reactive value that is dependent on other
+// reactive values, while watch is used to execute a function whenever a reactive value changes.
 import { Icon } from "@iconify/vue";
 import TodoCreator from "../components/TodoCreator.vue";
 import TodoItem from "../components/TodoItem.vue";
 
-const todoList = ref([]);
+const todoList = ref([]); // reactive data contains object
 
 //listen for change on reactive data "todoList" , invoke a callback function in which we
-// run the function setTodoListLocalStorage each time todoList array is updated 
+// run the function setTodoListLocalStorage each time todoList array is updated
 //  { deep: true }: option for watch property: track changes deep within this todoList array
 watch(
   todoList,
@@ -17,6 +19,11 @@ watch(
   },
   { deep: true }
 );
+
+//listen for all changes on todoList array, check if property isCompleted is true by every todos. return value true or false
+const todoCompleted = computed(() => {
+  return todoList.value.every((todo) => todo.isCompleted);
+});
 
 //function to retrieve the items from local storage when we refresh the application
 const fetchTodoList = () => {
@@ -101,6 +108,10 @@ const deleteTodo = (todoId) => {
     <p v-else class="todos-msg">
       <Icon icon="noto-v1:sad-but-relieved-face" />
       <span>You have no todo's to complete! Add one!</span>
+    </p>
+    <p v-if="todoCompleted && todoList.length > 0" class="todos-msg">
+      <Icon icon="noto-v1:party-popper" />
+      <span>You have completed all your todos! </span>
     </p>
     <!-- <p>{{ todoList }}</p> -->
   </main>
