@@ -1,4 +1,5 @@
 # VueTodoList
+This To-do List app built with Vue.js allows users to easily add, delete, update, and mark their to-dos as complete. It utilizes the Composition API for efficient state management, as well as various Vue.js features such as Components and Routing, Props, and Emission. 
 
 This template should help get you started developing with Vue 3 in Vite.
 
